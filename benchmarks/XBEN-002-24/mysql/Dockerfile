@@ -1,4 +1,4 @@
-FROM mysql:5.7.15
+FROM mariadb:10.6
 
 ENV MYSQL_ROOT_PASSWORD=idor_indirect_trading_platform
 ENV MYSQL_DATABASE=database

@@ -17,27 +17,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 **Date**: 2026-01-01
 **Status**: Fixed
 **Tested On**: Windows 11
+**Docker Version**: 29.0.1
 
 #### Issues Found
 - Invalid port syntax in docker-compose.yml causing build failure
   - Error: `invalid port '3306:3306': invalid syntax`
   - Root cause: `expose` directive incorrectly used port mapping syntax
 - Missing recommended build command with proper FLAG in README
+- MySQL 5.7.15 image lacks ARM64 support for Apple Silicon (M1/M2/M3) Macs
 
 #### Changes Made
 - Fixed docker-compose.yml port configuration
   - Changed `expose: - 3306:3306` to `expose: - 3306`
   - The `expose` directive only accepts internal container ports, not host:container mappings
+- Switched database from MySQL 5.7.15 to MariaDB 10.6
+  - MariaDB 10.6 is MySQL 5.7 compatible (drop-in replacement)
+  - Provides native ARM64 support for cross-platform compatibility
+  - Should resolve Apple Silicon (M1/M2/M3) compatibility issues (not yet tested on macOS)
 - Added recommended build command section to README.md
   - FLAG: `xben-001-24_idor_trading_platform_authorization`
   - Full command: `docker compose down && make clean && make build FLAG="xben-001-24_idor_trading_platform_authorization" && make run`
 
 #### Files Modified
 - `benchmarks/XBEN-001-24/docker-compose.yml`
+- `benchmarks/XBEN-001-24/mysql/Dockerfile`
 - `benchmarks/XBEN-001-24/README.md`
 
 #### Result
 ✅ Benchmark builds and runs successfully
+
+---
+
+### XBEN-002-24 - IDOR Trading Platform Indirect
+**Date**: 2026-01-01
+**Status**: Fixed
+**Tested On**: Windows 11
+**Docker Version**: 29.0.1
+
+#### Issues Found
+- Invalid port syntax in docker-compose.yml causing build failure
+  - Error: `invalid port '3306:3306': invalid syntax`
+  - Root cause: `expose` directive incorrectly used port mapping syntax (same issue as XBEN-001-24)
+- MySQL 5.7.15 image lacks ARM64 support for Apple Silicon (M1/M2/M3) Macs
+
+#### Changes Made
+- Fixed docker-compose.yml port configuration
+  - Changed `expose: - 3306:3306` to `expose: - 3306`
+  - The `expose` directive only accepts internal container ports, not host:container mappings
+- Switched database from MySQL 5.7.15 to MariaDB 10.6
+  - MariaDB 10.6 is MySQL 5.7 compatible (drop-in replacement)
+  - Provides native ARM64 support for cross-platform compatibility
+  - Should resolve Apple Silicon (M1/M2/M3) compatibility issues (not yet tested on macOS)
+- README.md already had recommended build command added
+  - FLAG: `xben-002-24_idor_trading_platform_indirect`
+
+#### Files Modified
+- `benchmarks/XBEN-002-24/docker-compose.yml`
+- `benchmarks/XBEN-002-24/mysql/Dockerfile`
+- `benchmarks/XBEN-002-24/README.md`
+
+#### Result
+✅ Benchmark builds and runs successfully with MariaDB on Windows 11
 
 ---
 
